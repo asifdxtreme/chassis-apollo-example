@@ -1,0 +1,4 @@
+---
+APPLICATION_ID: demo
+service_description:
+  name: Server

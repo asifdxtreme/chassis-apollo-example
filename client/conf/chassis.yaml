@@ -1,0 +1,38 @@
+---
+region:
+  name: us-east
+  availableZone: us-east-1
+cse:
+  service:
+    registry:
+      type: servicecenter
+      scope: full
+      autodiscovery: false
+      #address: https://cse.cn-north-1.myhwclouds.com:443
+      address: http://127.0.0.1:30100
+      refeshInterval : 30s
+      watch: true
+
+  config:
+    client:
+      serverUri: http://127.0.0.1:8080
+      #serverUri:  https://cse.cn-north-1.myhwclouds.com:443
+      #type: config_center			# config_center/apollo
+      type: apollo			# config_center/apollo
+      refreshMode: 1
+      refreshInterval: 10
+      tenantName:  default
+      autodiscovery: false
+      serviceName: apollo-chassis-demo			#Required only for Apollo
+      env: DEV				#Required only for Apollo
+      cluster: demo				#Required only for Apollo
+      namespace: application				#Required only for Apollo
+      token: fefd2aecb2301e796a9e6c790f5ad2ebe3fa99f3X			#Required only for Apollo
+  protocols:
+    rest:
+      listenAddress: 127.0.0.1:8085
+      advertiseAddress: 127.0.0.1:8085
+  handler:
+    chain:
+      Provider:
+        default: bizkeeper-provider, ratelimiter-provider
