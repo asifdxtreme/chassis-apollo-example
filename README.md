@@ -25,22 +25,19 @@ docker-compose up
 This brings up the Apollo, follow the below steps to configure the project and namespace.
 
 - Login to Apollo 
-![Apollo Login](images/Login-Apollo.png)
-By default the credentials is user is apollo/admin
-
-- Create a new Project
-![](images/NewProject.png)
-Create a new project called ***apollo-integration*** which we will use through out this example.
-![](images/Apollo-Integration.png)
-
-- Note all the details regarding Project Name, AppID, NameSpace, ClusterName.
-![](images/Project-Page.png)
-
-- Add a new Configurations
-![](images/AddNewConfig.png)
-Once config is added you need to release the config so that it will be available to outside components.
-![](images/ReleaseConfig.png)
-
+![Apollo Login](images/Login-Apollo.png)  
+By default the credentials is user is apollo/admin  
+- Create a new Project  
+![](images/NewProject.png)  
+Create a new project called ***apollo-integration*** which we will use through out this example.  
+![](images/Apollo-Integration.png)  
+- Note all the details regarding Project Name, AppID, NameSpace, ClusterName.  
+![](images/Project-Page.png)  
+- Add a new Configurations  
+![](images/AddNewConfig.png)  
+Once config is added you need to release the config so that it will be available to outside components.  
+![](images/ReleaseConfig.png)  
+  
 #### Configure the chassis.yaml
 You need to configure the chassis.yaml for both the client and server to use Apollo as the configurations server. (By default we have added these configurations to this example in client and server).
 ```go
