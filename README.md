@@ -60,6 +60,10 @@ Client and Server in this example can be run on the same machine
 ```go
 docker run -d -p 30100:30100 servicecomb/service-center
 ```  
+- Get Chassis
+```go
+go get github.com/ServiceComb/go-chassis
+```
 - Start the Client
 ```go
 cd client
@@ -74,6 +78,118 @@ go build
 ```
 - Verify the Communication between client and server
 ```go
-
+$ curl -v http://127.0.0.1:8085/greet/asif
+*   Trying 127.0.0.1...
+* TCP_NODELAY set
+* Connected to 127.0.0.1 (127.0.0.1) port 8085 (#0)
+> GET /greet/asif HTTP/1.1
+> Host: 127.0.0.1:8085
+> User-Agent: curl/7.58.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Date: Sun, 08 Jul 2018 15:45:41 GMT
+< Content-Length: 30
+< Content-Type: text/plain; charset=utf-8
+< 
+* Connection #0 to host 127.0.0.1 left intact
+user user asif from 95 from 62
 ```
+
+#### Change the Configurations of Chassis dynamically using Apollo
+
+##### QPS Limit
+- Test the QPS using AB tool without setting any QPS limit(don't judge this data for the performance of any component)  
+```go
+$ ab -n 1000 -c 1 http://127.0.0.1:8085/greet/asif
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            8085
+
+Document Path:          /greet/asif
+Document Length:        30 bytes
+
+Concurrency Level:      1
+Time taken for tests:   1.187 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      147000 bytes
+HTML transferred:       30000 bytes
+Requests per second:    842.60 [#/sec] (mean)
+Time per request:       1.187 [ms] (mean)
+Time per request:       1.187 [ms] (mean, across all concurrent requests)
+Transfer rate:          120.96 [Kbytes/sec] received
+```  
+The current QPS is 842.  
+- Now let's set the QPS to 100 dynamically using Apollo.
+
+Go to ***apollo-integration*** project and add a new configuration in ***application*** namespace.  
+![](images/AddQPSLimit.png)  
+Release this configuration.  
+Now using the same ab tool to benchmark the api.
+```go
+$ ab -n 1000 -c 1 http://127.0.0.1:8085/greet/asif
+This is ApacheBench, Version 2.3 <$Revision: 1807734 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        
+Server Hostname:        127.0.0.1
+Server Port:            8085
+
+Document Path:          /greet/asif
+Document Length:        30 bytes
+
+Concurrency Level:      1
+Time taken for tests:   9.891 seconds
+Complete requests:      1000
+Failed requests:        0
+Total transferred:      147000 bytes
+HTML transferred:       30000 bytes
+Requests per second:    101.10 [#/sec] (mean)
+Time per request:       9.891 [ms] (mean)
+Time per request:       9.891 [ms] (mean, across all concurrent requests)
+Transfer rate:          14.51 [Kbytes/sec] received
+
+```  
+Now you can see the QPS is 101, so here we were able to change the configuration of your microservices dynamically without restarting or changing anything in your microservice. ***Awesome***  
+  
+#### Fault Tolerance 
+
+TBD
+
+
+
 
