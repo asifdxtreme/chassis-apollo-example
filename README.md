@@ -1,4 +1,4 @@
-# Chassis-Apollo Example [WIP]
+# Chassis-Apollo Example
 
 This is a example illustrates the integration of go-chassis with Ctrip Apollo Configuration Center.
 
@@ -8,7 +8,6 @@ This examples showcases the following things:
 2. Configure chassis.yaml to use Apollo Configuration Server.
 3. Use Apollo to dynamically change configurations of chassis.
 4. Configure the QPS limit for microservices by using Apollo.
-5. Configure Fault tolerance for microservices by using Apollo.
 
 
 #### Quick start Apollo
@@ -184,11 +183,7 @@ Time per request:       9.891 [ms] (mean, across all concurrent requests)
 Transfer rate:          14.51 [Kbytes/sec] received
 
 ```  
-Now you can see the QPS is 101, so here we were able to change the configuration of your microservices dynamically without restarting or changing anything in your microservice. ***Awesome***  
-  
-#### Fault Tolerance 
-
-TBD
+Now you can see the QPS is 101, so here we were able to change the configuration of your microservices dynamically without restarting or changing anything in your microservice. ***Awesome***
 
 
 
